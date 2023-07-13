@@ -1,4 +1,4 @@
-package com.example.list.game.entites;
+package com.example.list.game.entity;
 
 import jakarta.persistence.*;
 
@@ -109,7 +109,7 @@ public class Game {
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
-            if (!(o instanceof com.example.list.game.entites.Game game)) return false;
+            if (!(o instanceof com.example.list.game.entity.Game game)) return false;
             return getId().equals(game.getId());
         }
 
