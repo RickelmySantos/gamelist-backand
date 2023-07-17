@@ -1,10 +1,12 @@
 package com.example.list.game.controller;
 
+import com.example.list.game.dto.GameDto;
 import com.example.list.game.dto.GameMinDto;
 import com.example.list.game.entity.Game;
 import com.example.list.game.services.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,5 +24,10 @@ public class GameController {
     public ResponseEntity<List<GameMinDto>> findAll(){
         List<GameMinDto> result = gameService.findAll();
         return ResponseEntity.ok(result);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<GameDto> getById(@PathVariable Long id){
+    GameDto result = gameService.findById(id);
+    return ResponseEntity.ok().body(result);
     }
 }
