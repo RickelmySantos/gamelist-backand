@@ -3,7 +3,9 @@ package com.example.list.game.services;
 import com.example.list.game.dto.GameDto;
 import com.example.list.game.dto.GameMinDto;
 import com.example.list.game.entity.Game;
+import com.example.list.game.projections.GameMinProjection;
 import com.example.list.game.repositories.GameRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @Service
 public class GameService {
+    @Autowired
     GameRepository gameRepository;
     public GameService(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
@@ -29,5 +32,11 @@ public class GameService {
     Game result = gameRepository.findById(id).get();
     GameDto gameDto = new GameDto(result);
     return  gameDto;
+    }
+
+    @Transactional(readOnly = true)
+    public List<GameMinDto> findByGameList(Long listId) {
+        List<GameMinProjection> games = gameRepository.searchByList(listId);
+        return games.stream().map(GameMinDto::new).toList();
     }
 }
